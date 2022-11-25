@@ -33,6 +33,15 @@
         app:layout_constraintStart_toEndOf="@id/note_type_pictogram"
         app:layout_constraintTop_toBottomOf="@+id/note_title" />
 
+    <ImageView
+        android:id="@+id/note_schedule_pictogram"
+        android:contentDescription="@string/note_schedule_pictogram"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/clock"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
