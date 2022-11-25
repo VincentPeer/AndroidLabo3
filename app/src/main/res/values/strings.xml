@@ -3,5 +3,8 @@
     <string name="generate">Generatre</string>
     <string name="delete_all">Delete all</string>
     <string name="creation_date">Creation date</string>
+    <string name="item_sorting">Items sorting</string>
     <string name="eta">ETA</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
