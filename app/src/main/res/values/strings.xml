@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">DAA_labo3</string>
+    <string name="generate">Generatre</string>
+    <string name="delete_all">Delete all</string>
+    <string name="creation_date">Creation date</string>
+    <string name="eta">ETA</string>
 </resources>
