@@ -8,10 +8,10 @@ class Repository(private val notesDAO: NotesDAO) {
     val allNotesAndSchedule = notesDAO.getAll()
     val notesCount  = notesDAO.getCount()
 
-    fun insertNotes(vararg notes: Note) {
-        thread {
-            notesDAO.insertAll(*notes)
-        }
-    }
+//    fun insertNotes(vararg notes: Note) {
+//        thread {
+//            notesDAO.insertAll(*notes)
+//        }
+//    }
 
 }
