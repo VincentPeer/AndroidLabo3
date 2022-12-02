@@ -1,10 +1,8 @@
 <resources>
     <string name="app_name">DAA_labo3</string>
-
-    <string name="note_type_pictogram">Note type pictogram</string>
-
-    <string name="note_title_placeholder">Lorem ipsum dolor sit amet</string>
-    <string name="note_description_placeholder">Lorem ipsum dolor sit amet.</string>
-    <string name="note_schedule_pictogram">Note schedule pictogram</string>
-
+    <string name="generate">Generatre</string>
+    <string name="delete_all">Delete all</string>
+    <string name="creation_date">Creation date</string>
+    <string name="item_sorting">Items sorting</string>
+    <string name="eta">ETA</string>
 </resources>
