@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import ch.heigvd.daa_labo3.models.Note
 import kotlin.concurrent.thread
@@ -12,6 +13,7 @@ import kotlin.concurrent.thread
     entities = [Note::class],
     version = 1,
     exportSchema = true)
+@TypeConverters(Note.CalendarConverter::class)
 abstract class NoteDatabase : RoomDatabase() {
 
     abstract fun noteDAO(): NotesDAO
@@ -32,6 +34,7 @@ abstract class NoteDatabase : RoomDatabase() {
         }
     }
 
+
     private class creationCallBack : RoomDatabase.Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
@@ -41,20 +44,13 @@ abstract class NoteDatabase : RoomDatabase() {
                     thread {
                         // when the database is created for the 1st time, we can, for example, populate it
                         // should be done asynchronously
-                        for ( i in 0..20) {
-                           database.noteDAO().insertAll(Note.generateRandomNote())
-                        }
+//                        for ( i in 0..20) {
+//                           database.noteDAO().insertAll(Note.generateRandomNote())
+//                        }
                     }
                 }
             }
         }
-
-        override fun onOpen(db: SupportSQLiteDatabase) {
-            super.onOpen(db)
-        }
-
-        override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
-            super.onDestructiveMigration(db)
-        }
     }
+
 }
