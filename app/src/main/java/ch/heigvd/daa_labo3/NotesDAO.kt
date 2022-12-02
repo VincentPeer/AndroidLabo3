@@ -10,7 +10,7 @@ import ch.heigvd.daa_labo3.models.Note
 interface NotesDAO {
 
     @Insert
-    fun insertAll(vararg note: Note)
+    fun insertAll(vararg notes: Note)
 
 //    @Query("SELECT * FROM Note WHERE name = :nameToSearch ORDER BY birthday ASC")
 //    fun getAllPersonsByName(nameToSearch : String) : LiveData<List<Person>>

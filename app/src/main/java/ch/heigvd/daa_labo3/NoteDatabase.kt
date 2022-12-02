@@ -24,21 +24,26 @@ abstract class NoteDatabase : RoomDatabase() {
                     context.applicationContext,
                     NoteDatabase::class.java, "notes.db"
                 )
+                    .fallbackToDestructiveMigration()
+                    .addCallback(creationCallBack())
                     .build()
                 INSTANCE!!
             }
         }
     }
 
-    private class MyDatabaseCallBack : RoomDatabase.Callback() {
+    private class creationCallBack : RoomDatabase.Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
             INSTANCE?.let { database ->
                 val isEmpty = database.noteDAO().getCount().value == 0L
                 if (isEmpty) {
                     thread {
-                    // when the database is created for the 1st time, we can, for example, populate it
-                    // should be done asynchronously
+                        // when the database is created for the 1st time, we can, for example, populate it
+                        // should be done asynchronously
+                        for ( i in 0..20) {
+                           database.noteDAO().insertAll(Note.generateRandomNote())
+                        }
                     }
                 }
             }
