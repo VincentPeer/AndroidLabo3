@@ -61,13 +61,5 @@ abstract class NoteDatabase : RoomDatabase() {
             }
         }
 
-        override fun onOpen(db: SupportSQLiteDatabase) {
-            super.onOpen(db)
-            onCreate(db)
-        }
-
-        override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
-            super.onDestructiveMigration(db)
-        }
     }
 }

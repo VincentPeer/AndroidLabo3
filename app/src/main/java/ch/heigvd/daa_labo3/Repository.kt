@@ -7,8 +7,6 @@ import kotlin.concurrent.thread
 class Repository(private val notesDAO: NotesDAO) {
 
     val allNotesAndSchedule = notesDAO.getAll()
-    val notesCount  = notesDAO.getCount()
-
 
     fun insertNote(note: NoteAndSchedule) {
         thread {

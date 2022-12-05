@@ -5,16 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ch.heigvd.daa_labo3.models.Note
-import ch.heigvd.daa_labo3.models.NoteAndSchedule
-import ch.heigvd.daa_labo3.models.State
-import ch.heigvd.daa_labo3.models.Type
 import java.util.*
 
 /**
@@ -48,7 +41,14 @@ class NotesFragment : Fragment() {
             adapter.items = it
         }
 
-    }
+        noteViewModel.sorting.observe(viewLifecycleOwner) {
+            when(it) {
+                NoteViewModel.Sorting.CreationDate -> adapter.sortByCreationDate()
+                NoteViewModel.Sorting.Schedule -> adapter.sortBySchedule()
+                else -> {}
+            }
+        }
 
+    }
 
 }
