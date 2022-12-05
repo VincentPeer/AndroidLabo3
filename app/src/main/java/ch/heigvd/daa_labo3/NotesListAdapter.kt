@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.heigvd.daa_labo3.models.Note
 import ch.heigvd.daa_labo3.models.NoteAndSchedule
 import ch.heigvd.daa_labo3.models.Type
+import java.util.*
 
 class NotesListAdapter(_items : List<NoteAndSchedule> = listOf()) : RecyclerView.Adapter<NotesListAdapter.ViewHolder>() {
 
@@ -27,13 +28,13 @@ class NotesListAdapter(_items : List<NoteAndSchedule> = listOf()) : RecyclerView
     override fun getItemViewType(position: Int): Int {
         val item = items[position]
         return if (item.schedule == null)
-            WITH_SCHEDULE
-        else
             WITHOUT_SCHEDULE
+        else
+            WITH_SCHEDULE
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        if (viewType == 1) {
+        if (viewType == WITH_SCHEDULE) {
             return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_note_schedule, parent, false), viewType)
         } else {
             return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_note, parent, false),viewType)
@@ -59,10 +60,12 @@ class NotesListAdapter(_items : List<NoteAndSchedule> = listOf()) : RecyclerView
             noteTypePictogram.setImageResource(getDrawableId(note.note.type))
 
             if (viewType == WITH_SCHEDULE) {
-                val color = ContextCompat.getColor(context, R.color.purple_200)
-                noteSchedulePictogram.setColorFilter(color)
+                val date = note.schedule?.date
+                if (date != null && date.after(Calendar.getInstance())) {
+                    val color = ContextCompat.getColor(context, R.color.red)
+                    noteSchedulePictogram.setColorFilter(color)
+                }
             }
-
         }
 
     }
@@ -82,11 +85,6 @@ class NotesListAdapter(_items : List<NoteAndSchedule> = listOf()) : RecyclerView
             }
         }
 
-    }
-
-    private enum class ViewType {
-        WITH_SCHEDULE,
-        WITHOUT_SCHEDULE
     }
 
 }
