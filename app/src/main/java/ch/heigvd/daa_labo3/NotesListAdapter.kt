@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import ch.heigvd.daa_labo3.models.Note
 import ch.heigvd.daa_labo3.models.NoteAndSchedule
@@ -49,16 +50,19 @@ class NotesListAdapter(_items : List<NoteAndSchedule> = listOf()) : RecyclerView
         private val noteTitle = view.findViewById<TextView>(R.id.note_title)
         private val noteDescr = view.findViewById<TextView>(R.id.note_description)
         private val noteTypePictogram = view.findViewById<ImageView>(R.id.note_type_pictogram)
+        private val noteSchedulePictogram = view.findViewById<ImageView>(R.id.note_schedule_pictogram)
+        private val context = view.context
 
         fun bind(note: NoteAndSchedule) {
             noteTitle.text = note.note.title
             noteDescr.text = note.note.text
             noteTypePictogram.setImageResource(getDrawableId(note.note.type))
 
-//            if (viewType == 1) {
-//                noteDescr.text = "schedule"
-//
-//            }
+            if (viewType == WITH_SCHEDULE) {
+                val color = ContextCompat.getColor(context, R.color.purple_200)
+                noteSchedulePictogram.setColorFilter(color)
+            }
+
         }
 
     }
