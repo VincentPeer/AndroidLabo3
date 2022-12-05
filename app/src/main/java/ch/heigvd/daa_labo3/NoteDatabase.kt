@@ -29,6 +29,7 @@ abstract class NoteDatabase : RoomDatabase() {
                     NoteDatabase::class.java, "notes.db"
                 )
                     .fallbackToDestructiveMigration()
+                    // not called thus useless. Don't know wy...
                     .addCallback(CreationCallBack())
                     .build()
                 INSTANCE!!
@@ -36,8 +37,9 @@ abstract class NoteDatabase : RoomDatabase() {
         }
     }
 
-
+    // Not called, don't know wy...
     private class CreationCallBack : RoomDatabase.Callback() {
+
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
             INSTANCE?.let { database ->
@@ -57,6 +59,15 @@ abstract class NoteDatabase : RoomDatabase() {
                     }
                 }
             }
+        }
+
+        override fun onOpen(db: SupportSQLiteDatabase) {
+            super.onOpen(db)
+            onCreate(db)
+        }
+
+        override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
+            super.onDestructiveMigration(db)
         }
     }
 }

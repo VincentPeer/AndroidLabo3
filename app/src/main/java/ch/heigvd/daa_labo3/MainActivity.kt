@@ -23,8 +23,13 @@ class MainActivity : AppCompatActivity() {
                 (application as NoteApp).repository
                 true
             }
-            R.id.delete_all -> { /* do something */ true }
-            else -> { true }
+            R.id.delete_all -> {
+                (application as NoteApp).repository.deleteAll()
+                true
+            }
+            else -> {
+                true
+            }
         }
     }
 }
