@@ -14,6 +14,12 @@ class NoteViewModel(private val repository: Repository) : ViewModel() {
         repository.insertNote(note)
     }
 
+
+    fun generateANote() { /* création d’une Note aléatoire et insertion
+dans base de données */ }
+    fun deleteAllNote() { repository.deleteAll() }
+
+
     class NoteViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(NoteViewModel::class.java)) {

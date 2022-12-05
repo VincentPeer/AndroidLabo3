@@ -20,11 +20,16 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             R.id.generate -> {
-                (application as NoteApp).repository
+                (application as NoteApp).repository.generateANote()
                 true
             }
-            R.id.delete_all -> { /* do something */ true }
-            else -> { true }
+            R.id.delete_all -> {
+                (application as NoteApp).repository.deleteAll()
+                true
+            }
+            else -> {
+                true
+            }
         }
     }
 }
