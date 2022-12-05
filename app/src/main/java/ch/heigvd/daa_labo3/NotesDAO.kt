@@ -16,7 +16,7 @@ interface NotesDAO {
     fun insertNote(note: Note) : Long
 
     @Insert
-    fun insertSchedule(schedule: Schedule)
+    fun insertSchedule(schedule: Schedule): Long
 
 //    @Query("SELECT * FROM Note WHERE name = :nameToSearch ORDER BY birthday ASC")
 //    fun getAllPersonsByName(nameToSearch : String) : LiveData<List<Person>>

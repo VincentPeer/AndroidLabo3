@@ -15,18 +15,20 @@ class Repository(private val notesDAO: NotesDAO) {
 
     fun insertNote(note: NoteAndSchedule) {
         thread {
-            notesDAO.insertNote(note.note)
+            val ownerId = notesDAO.insertNote(note.note)
             note.schedule?.let {
+                it.ownerId = ownerId
                 notesDAO.insertSchedule(it)
             }
         }
     }
 
     fun generateANote() {
-        var note = Note.generateRandomNote()
-        //var schedule = Schedule(5, Calendar.getInstance().set(1,1,2000))
-        var n = NoteAndSchedule(note, null)
-        insertNote(n)
+        insertNote(NoteAndSchedule(Note.generateRandomNote(), Note.generateRandomSchedule()))
+//        var note = Note.generateRandomNote()
+//        //var schedule = Schedule(5, Calendar.getInstance().set(1,1,2000))
+//        var n = NoteAndSchedule(note, null)
+//        insertNote(n)
     }
 
     fun deleteAll() {
