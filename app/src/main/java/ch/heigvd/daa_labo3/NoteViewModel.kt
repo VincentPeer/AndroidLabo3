@@ -2,8 +2,6 @@ package ch.heigvd.daa_labo3
 
 
 import androidx.lifecycle.*
-import ch.heigvd.daa_labo3.models.NoteAndSchedule
-
 
 class NoteViewModel(private val repository: Repository) : ViewModel() {
 
@@ -11,10 +9,6 @@ class NoteViewModel(private val repository: Repository) : ViewModel() {
 
     //val notesCount = repository.notesCount
     val sorting = MutableLiveData<Sorting>(Sorting.CreationDate)
-
-    fun createNote(note: NoteAndSchedule) {
-        repository.insertNote(note)
-    }
 
     fun generateANote() {
         repository.generateANote()
@@ -32,7 +26,6 @@ class NoteViewModel(private val repository: Repository) : ViewModel() {
             throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
-
 
     enum class Sorting {
         Schedule,

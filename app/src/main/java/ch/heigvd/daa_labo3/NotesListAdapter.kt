@@ -1,14 +1,15 @@
 package ch.heigvd.daa_labo3
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.SimpleAdapter
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import ch.heigvd.daa_labo3.models.NoteAndSchedule
+import ch.heigvd.daa_labo3.models.State
 import ch.heigvd.daa_labo3.models.Type
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,6 +18,7 @@ class NotesListAdapter(_items: List<NoteAndSchedule> = listOf()) :
     RecyclerView.Adapter<NotesListAdapter.ViewHolder>() {
 
     var items = listOf<NoteAndSchedule>()
+        @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -31,7 +33,10 @@ class NotesListAdapter(_items: List<NoteAndSchedule> = listOf()) :
     }
 
     fun sortBySchedule() {
-        items = items.sortedBy { it.schedule?.date }
+        items = items.sortedWith(compareBy(
+            {it.schedule == null},
+            {it.schedule?.date},
+        ))
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -82,6 +87,10 @@ class NotesListAdapter(_items: List<NoteAndSchedule> = listOf()) :
             noteDescr.text = note.note.text
             noteTypePictogram.setImageResource(getDrawableId(note.note.type))
 
+            if (note.note.state == State.DONE) {
+                noteTypePictogram.setColorFilter(ContextCompat.getColor(context, R.color.green))
+            }
+
             if (viewType == SCHEDULE && note.schedule?.date != null) {
 
                 val date = note.schedule.date
@@ -111,6 +120,7 @@ class NotesListAdapter(_items: List<NoteAndSchedule> = listOf()) :
 
             }
         }
+
 
     }
 
