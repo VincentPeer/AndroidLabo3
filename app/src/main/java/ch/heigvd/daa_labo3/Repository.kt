@@ -24,8 +24,8 @@ class Repository(private val notesDAO: NotesDAO) {
 
     fun generateANote() {
         var note = Note.generateRandomNote()
-        //var schedule = Schedule(5, Calendar.getInstance().set(1,1,2000))
-        var n = NoteAndSchedule(note, null)
+        var schedule = Note.generateRandomSchedule()
+        var n = NoteAndSchedule(note, schedule)
         insertNote(n)
     }
 
