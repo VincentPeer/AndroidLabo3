@@ -7,12 +7,14 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import ch.heigvd.daa_labo3.models.Note
+import ch.heigvd.daa_labo3.models.Schedule
 import kotlin.concurrent.thread
 
 @Database(
-    entities = [Note::class],
+    entities = [Note::class, Schedule::class],
     version = 1,
-    exportSchema = true)
+    exportSchema = true
+)
 @TypeConverters(Note.CalendarConverter::class)
 abstract class NoteDatabase : RoomDatabase() {
 
@@ -27,7 +29,7 @@ abstract class NoteDatabase : RoomDatabase() {
                     NoteDatabase::class.java, "notes.db"
                 )
                     .fallbackToDestructiveMigration()
-                    .addCallback(creationCallBack())
+                    .addCallback(CreationCallBack())
                     .build()
                 INSTANCE!!
             }
@@ -35,7 +37,7 @@ abstract class NoteDatabase : RoomDatabase() {
     }
 
 
-    private class creationCallBack : RoomDatabase.Callback() {
+    private class CreationCallBack : RoomDatabase.Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
             INSTANCE?.let { database ->
@@ -44,13 +46,17 @@ abstract class NoteDatabase : RoomDatabase() {
                     thread {
                         // when the database is created for the 1st time, we can, for example, populate it
                         // should be done asynchronously
-//                        for ( i in 0..20) {
-//                           database.noteDAO().insertAll(Note.generateRandomNote())
-//                        }
+                        val dao = database.noteDAO()
+                        for (i in 0..10) {
+                            val id = dao.insertNote(Note.generateRandomNote())
+                            Note.generateRandomSchedule()?.let {
+                                it.ownerId = id
+                                dao.insertSchedule(it)
+                            }
+                        }
                     }
                 }
             }
         }
     }
-
 }

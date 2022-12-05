@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.heigvd.daa_labo3.models.Note
+import ch.heigvd.daa_labo3.models.NoteAndSchedule
 import ch.heigvd.daa_labo3.models.State
 import ch.heigvd.daa_labo3.models.Type
 import java.util.*
