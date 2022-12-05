@@ -1,10 +1,7 @@
 package ch.heigvd.daa_labo3
 
-import androidx.lifecycle.LiveData
 import ch.heigvd.daa_labo3.models.Note
 import ch.heigvd.daa_labo3.models.NoteAndSchedule
-import ch.heigvd.daa_labo3.models.Schedule
-import java.util.Calendar
 import kotlin.concurrent.thread
 
 class Repository(private val notesDAO: NotesDAO) {
@@ -15,16 +12,16 @@ class Repository(private val notesDAO: NotesDAO) {
 
     fun insertNote(note: NoteAndSchedule) {
         thread {
-            notesDAO.insertNote(note.note)
+            val ownerId = notesDAO.insertNote(note.note)
             note.schedule?.let {
+                it.ownerId = ownerId
                 notesDAO.insertSchedule(it)
             }
         }
     }
 
     fun generateANote() {
-        val n = NoteAndSchedule(Note.generateRandomNote(), Note.generateRandomSchedule())
-        insertNote(n)
+        insertNote(NoteAndSchedule(Note.generateRandomNote(), Note.generateRandomSchedule()))
     }
 
     fun deleteAll() {

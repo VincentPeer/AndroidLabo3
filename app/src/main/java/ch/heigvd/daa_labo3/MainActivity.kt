@@ -18,17 +18,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var viewModel = NoteViewModel((application as NoteApp).repository)
         return when(item.itemId) {
             R.id.generate -> {
-                (application as NoteApp).repository.generateANote()
+                viewModel.generateANote()
                 true
             }
             R.id.delete_all -> {
-                (application as NoteApp).repository.deleteAll()
+                viewModel.deleteAllNote()
+                true
+            }
+            R.id.creation_date -> {
+                true
+            }
+            R.id.eta -> {
                 true
             }
             else -> {
-                true
+                false
             }
         }
     }

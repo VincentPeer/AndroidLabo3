@@ -15,8 +15,9 @@ class NoteViewModel(private val repository: Repository) : ViewModel() {
     }
 
 
-    fun generateANote() { /* création d’une Note aléatoire et insertion
-dans base de données */ }
+    fun generateANote() {
+        repository.generateANote()
+    }
     fun deleteAllNote() { repository.deleteAll() }
 
 

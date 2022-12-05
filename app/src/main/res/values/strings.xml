@@ -5,6 +5,7 @@
     <string name="creation_date">Creation date</string>
     <string name="item_sorting">Items sorting</string>
     <string name="eta">ETA</string>
+    <string name="delete_btn">Delete</string>
 
     <!--    Please don't remove -->
     <string name="note_type_pictogram">Note type pictogram</string>

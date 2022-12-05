@@ -17,11 +17,6 @@ import ch.heigvd.daa_labo3.models.State
 import ch.heigvd.daa_labo3.models.Type
 import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-//private const val ARG_PARAM2 = "param2"
-
 /**
  * A simple [Fragment] subclass.
  * Use the [NotesFragment.newInstance] factory method to
@@ -39,15 +34,6 @@ class NotesFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_notes, container, false)
-    }
-
-    // Just for test purpose
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        noteViewModel.createNote(NoteAndSchedule(
-            note = Note.generateRandomNote(),
-            schedule = Note.generateRandomSchedule()
-        ))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
