@@ -23,9 +23,7 @@ class Repository(private val notesDAO: NotesDAO) {
     }
 
     fun generateANote() {
-        var note = Note.generateRandomNote()
-        var schedule = Note.generateRandomSchedule()
-        var n = NoteAndSchedule(note, schedule)
+        val n = NoteAndSchedule(Note.generateRandomNote(), Note.generateRandomSchedule())
         insertNote(n)
     }
 
