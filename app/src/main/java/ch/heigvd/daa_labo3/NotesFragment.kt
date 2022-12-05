@@ -33,13 +33,21 @@ class NotesFragment : Fragment() {
         NoteViewModel.NoteViewModelFactory((requireActivity().application as NoteApp).repository)
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_notes, container, false)
+    }
+
+    // Just for test purpose
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        noteViewModel.createNote(NoteAndSchedule(
+            note = Note.generateRandomNote(),
+            schedule = Note.generateRandomSchedule()
+        ))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,7 +61,6 @@ class NotesFragment : Fragment() {
         noteViewModel.allNotes.observe(viewLifecycleOwner) {
             adapter.items = it
         }
-
 
     }
 

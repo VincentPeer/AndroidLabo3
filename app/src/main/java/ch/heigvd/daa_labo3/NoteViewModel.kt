@@ -8,10 +8,10 @@ import ch.heigvd.daa_labo3.models.NoteAndSchedule
 class NoteViewModel(private val repository: Repository) : ViewModel() {
 
     val allNotes = repository.allNotesAndSchedule
-    val notesCount = repository.notesCount
+    //val notesCount = repository.notesCount
 
     fun createNote(note: NoteAndSchedule) {
-        //repository.insertNotes(note)
+        repository.insertNote(note)
     }
 
     class NoteViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
