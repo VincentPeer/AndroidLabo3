@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.heigvd.daa_labo3.models.Note
 import ch.heigvd.daa_labo3.models.NoteAndSchedule
 import ch.heigvd.daa_labo3.models.Type
+import java.text.SimpleDateFormat
 import java.util.*
 
 class NotesListAdapter(_items : List<NoteAndSchedule> = listOf()) : RecyclerView.Adapter<NotesListAdapter.ViewHolder>() {
@@ -52,6 +53,7 @@ class NotesListAdapter(_items : List<NoteAndSchedule> = listOf()) : RecyclerView
         private val noteDescr = view.findViewById<TextView>(R.id.note_description)
         private val noteTypePictogram = view.findViewById<ImageView>(R.id.note_type_pictogram)
         private val noteSchedulePictogram = view.findViewById<ImageView>(R.id.note_schedule_pictogram)
+        private val noteSchesuleText = view.findViewById<TextView>(R.id.schedule_text)
         private val context = view.context
 
         fun bind(note: NoteAndSchedule) {
@@ -64,6 +66,18 @@ class NotesListAdapter(_items : List<NoteAndSchedule> = listOf()) : RecyclerView
                 if (date != null && date.after(Calendar.getInstance())) {
                     val color = ContextCompat.getColor(context, R.color.red)
                     noteSchedulePictogram.setColorFilter(color)
+                    noteSchesuleText.text = context.getString(R.string.schedule_late_text)
+                } else if (date != null) {
+                    val remaining = Calendar.getInstance().timeInMillis - date.timeInMillis
+                    val dnb = (remaining / (24 * 60 * 60 * 1000)).toInt()
+                    if (dnb > 30) {
+                        val mnb = (dnb / 30).toInt()
+                        noteSchesuleText.text = context.resources.getQuantityString(R.plurals.nb_month,
+                            mnb, mnb)
+                    } else {
+                        noteSchesuleText.text = context.resources.getQuantityString(R.plurals.nb_day,
+                            dnb, dnb)
+                    }
                 }
             }
         }

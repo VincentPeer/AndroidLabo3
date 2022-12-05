@@ -12,5 +12,20 @@
     <string name="note_title_placeholder">Lorem ipsum dolor sit amet</string>
     <string name="note_description_placeholder">Lorem ipsum dolor sit amet.</string>
     <string name="note_schedule_pictogram">Note schedule pictogram</string>
+    <string name="generic_text_placeholder">placeholder</string>
+    <string name="schedule_late_text">Late</string>
+
+
+
+
+    <plurals name="nb_month">
+        <item quantity="one">%1$x month</item>
+        <item quantity="other">%1$d months</item>
+    </plurals>
+
+    <plurals name="nb_day">
+        <item quantity="one">%1$x day</item>
+        <item quantity="other">%1$d days</item>
+    </plurals>
 
 </resources>
