@@ -6,7 +6,7 @@
         android:id="@+id/sort_button"
         android:title="@string/item_sorting"
         android:icon="@drawable/sort"
-        app:showAsAction="ifRoom">
+        app:showAsAction="ifRoom|withText">
         <menu>
             <item
                 android:id="@+id/creation_date"
@@ -15,5 +15,7 @@
                 android:id="@+id/eta"
                 android:title="@string/eta"/>
         </menu>
+
     </item>
+
 </menu>
