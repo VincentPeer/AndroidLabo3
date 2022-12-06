@@ -1,6 +1,5 @@
 package ch.heigvd.daa_labo3
 
-
 import androidx.lifecycle.*
 
 class NoteViewModel(private val repository: Repository) : ViewModel() {
@@ -31,6 +30,4 @@ class NoteViewModel(private val repository: Repository) : ViewModel() {
         Schedule,
         CreationDate
     }
-
-
 }
