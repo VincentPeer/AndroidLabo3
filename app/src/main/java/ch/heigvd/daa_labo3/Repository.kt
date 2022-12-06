@@ -7,6 +7,7 @@ import kotlin.concurrent.thread
 class Repository(private val notesDAO: NotesDAO) {
 
     val allNotesAndSchedule = notesDAO.getAll()
+    val notesCount = notesDAO.getCount()
 
     fun insertNote(note: NoteAndSchedule) {
         thread {
@@ -20,10 +21,6 @@ class Repository(private val notesDAO: NotesDAO) {
 
     fun generateANote() {
         insertNote(NoteAndSchedule(Note.generateRandomNote(), Note.generateRandomSchedule()))
-    }
-
-    fun getCount() {
-        notesDAO.getCount().value
     }
 
     fun deleteAll() {

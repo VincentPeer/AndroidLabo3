@@ -20,9 +20,13 @@ class ControlsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val counter = view.findViewById<TextView>(R.id.note_counter)
+        counter.text = "0"
+        noteViewModel.notesCount.observe(viewLifecycleOwner) {
+            counter.text = it.toString()
+        }
         // Set the number of items in the list
-        view.findViewById<TextView>(R.id.note_counter).text = (noteViewModel.notesCount ?: 0).toString()
+
 
         // Generate a note when the generate button is pressed
         view.findViewById<Button>(R.id.generate_btn).setOnClickListener {
@@ -33,6 +37,5 @@ class ControlsFragment : Fragment() {
         view.findViewById<Button>(R.id.delete_btn).setOnClickListener {
             noteViewModel.deleteAllNote()
         }
-
     }
 }
