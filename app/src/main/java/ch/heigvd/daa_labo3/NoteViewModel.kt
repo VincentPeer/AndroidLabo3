@@ -7,7 +7,7 @@ class NoteViewModel(private val repository: Repository) : ViewModel() {
 
     val allNotes = repository.allNotesAndSchedule
 
-    //val notesCount = repository.notesCount
+    val notesCount = repository.getCount()
     val sorting = MutableLiveData<Sorting>(Sorting.CreationDate)
 
     fun generateANote() {
@@ -15,6 +15,10 @@ class NoteViewModel(private val repository: Repository) : ViewModel() {
     }
 
     fun deleteAllNote() { repository.deleteAll() }
+
+    fun getCount() {
+        repository.getCount()
+    }
 
 
     class NoteViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {

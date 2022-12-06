@@ -22,6 +22,10 @@ class Repository(private val notesDAO: NotesDAO) {
         insertNote(NoteAndSchedule(Note.generateRandomNote(), Note.generateRandomSchedule()))
     }
 
+    fun getCount() {
+        notesDAO.getCount().value
+    }
+
     fun deleteAll() {
         thread {
             notesDAO.deleteAll()
