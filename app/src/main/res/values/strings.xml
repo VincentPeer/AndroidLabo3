@@ -16,7 +16,9 @@
     <string name="schedule_late_text">Late</string>
 
 
+    <string name="note_title_format">%1$s (%2$s)</string>
 
+    <string name="date_format">dd.MM, HH:mm:ss</string>
 
     <plurals name="nb_month">
         <item quantity="one">%1$x month</item>

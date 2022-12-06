@@ -1,5 +1,6 @@
 package ch.heigvd.daa_labo3
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,38 +8,56 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import ch.heigvd.daa_labo3.models.Note
 import ch.heigvd.daa_labo3.models.NoteAndSchedule
+import ch.heigvd.daa_labo3.models.State
 import ch.heigvd.daa_labo3.models.Type
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NotesListAdapter(_items : List<NoteAndSchedule> = listOf()) : RecyclerView.Adapter<NotesListAdapter.ViewHolder>() {
+class NotesListAdapter(_items: List<NoteAndSchedule> = listOf()) :
+    RecyclerView.Adapter<NotesListAdapter.ViewHolder>() {
 
     var items = listOf<NoteAndSchedule>()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+        @SuppressLint("NotifyDataSetChanged")
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     init {
         items = _items
     }
 
+    fun sortByCreationDate() {
+        items = items.sortedBy { it.note.creationDate }
+    }
+
+    fun sortBySchedule() {
+        items = items.sortedWith(compareBy(
+            {it.schedule == null},
+            {it.schedule?.date},
+        ))
+    }
 
     override fun getItemViewType(position: Int): Int {
         val item = items[position]
         return if (item.schedule == null)
-            WITHOUT_SCHEDULE
+            NO_SCHEDULE
         else
-            WITH_SCHEDULE
+            SCHEDULE
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        if (viewType == WITH_SCHEDULE) {
-            return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_note_schedule, parent, false), viewType)
+        if (viewType == SCHEDULE) {
+            return ViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.list_item_note_schedule, parent, false), viewType
+            )
         } else {
-            return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_note, parent, false),viewType)
+            return ViewHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.list_item_note, parent, false),
+                viewType
+            )
         }
     }
 
@@ -52,42 +71,63 @@ class NotesListAdapter(_items : List<NoteAndSchedule> = listOf()) : RecyclerView
         private val noteTitle = view.findViewById<TextView>(R.id.note_title)
         private val noteDescr = view.findViewById<TextView>(R.id.note_description)
         private val noteTypePictogram = view.findViewById<ImageView>(R.id.note_type_pictogram)
-        private val noteSchedulePictogram = view.findViewById<ImageView>(R.id.note_schedule_pictogram)
+        private val noteSchedulePictogram =
+            view.findViewById<ImageView>(R.id.note_schedule_pictogram)
         private val noteSchesuleText = view.findViewById<TextView>(R.id.schedule_text)
         private val context = view.context
 
         fun bind(note: NoteAndSchedule) {
+            val dateStr = SimpleDateFormat(
+                context.getString(R.string.date_format),
+                Locale.getDefault()
+            ).format(note.note.creationDate.timeInMillis).toString()
             noteTitle.text = note.note.title
+            noteTitle.text =
+                context.getString(R.string.note_title_format, note.note.title, dateStr)
             noteDescr.text = note.note.text
             noteTypePictogram.setImageResource(getDrawableId(note.note.type))
 
-            if (viewType == WITH_SCHEDULE) {
-                val date = note.schedule?.date
-                if (date != null && date.after(Calendar.getInstance())) {
+            if (note.note.state == State.DONE) {
+                noteTypePictogram.setColorFilter(ContextCompat.getColor(context, R.color.green))
+            }
+
+            if (viewType == SCHEDULE && note.schedule?.date != null) {
+
+                val date = note.schedule.date
+                val remaining = date.timeInMillis - Calendar.getInstance().timeInMillis
+
+                if (remaining < 0) {
                     val color = ContextCompat.getColor(context, R.color.red)
                     noteSchedulePictogram.setColorFilter(color)
                     noteSchesuleText.text = context.getString(R.string.schedule_late_text)
-                } else if (date != null) {
-                    val remaining = Calendar.getInstance().timeInMillis - date.timeInMillis
+                } else {
+                    val color = ContextCompat.getColor(context, R.color.black)
+                    noteSchedulePictogram.setColorFilter(color)
                     val dnb = (remaining / (24 * 60 * 60 * 1000)).toInt()
                     if (dnb > 30) {
-                        val mnb = (dnb / 30).toInt()
-                        noteSchesuleText.text = context.resources.getQuantityString(R.plurals.nb_month,
-                            mnb, mnb)
+                        val mnb = (dnb / 30)
+                        noteSchesuleText.text = context.resources.getQuantityString(
+                            R.plurals.nb_month,
+                            mnb, mnb
+                        )
                     } else {
-                        noteSchesuleText.text = context.resources.getQuantityString(R.plurals.nb_day,
-                            dnb, dnb)
+                        noteSchesuleText.text = context.resources.getQuantityString(
+                            R.plurals.nb_day,
+                            dnb, dnb
+                        )
                     }
                 }
+
             }
         }
+
 
     }
 
     companion object {
 
-        private val WITH_SCHEDULE = 1
-        private val WITHOUT_SCHEDULE = 0
+        private val SCHEDULE = 1
+        private val NO_SCHEDULE = 0
 
         fun getDrawableId(noteType: Type): Int {
             when (noteType) {
