@@ -1,15 +1,15 @@
 package ch.heigvd.daa_labo3
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var prefs : SharedPreferences
     private val viewModel:NoteViewModel by viewModels {
         NoteViewModel.NoteViewModelFactory((application as NoteApp).repository)
     }
@@ -17,11 +17,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+    }
 
-        // Retrieve the sort list set by the user during his last activity or set creation date by default
-        prefs = getPreferences(Context.MODE_PRIVATE)
-        val sortedValue : String? = prefs.getString("sorted_choice", "CreationDate")
+    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
+        // Retrieve the sort type set by the user during his last activity or set creation date by default
+        val sortedValue : String? = getPreferences(Context.MODE_PRIVATE).getString("sorted_choice", "CreationDate")
         viewModel.sorting.postValue(NoteViewModel.Sorting.valueOf(sortedValue!!))
+        return super.onCreateView(name, context, attrs)
     }
 
     // Add menu options to the action bar
@@ -42,12 +44,12 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.creation_date -> {
                 viewModel.sorting.postValue(NoteViewModel.Sorting.CreationDate)
-                prefs.edit().putString("sorted_choice", "CreationDate").apply()
+                getPreferences(Context.MODE_PRIVATE).edit().putString("sorted_choice", "CreationDate").apply()
                 true
             }
             R.id.eta -> {
                 viewModel.sorting.postValue(NoteViewModel.Sorting.Schedule)
-                prefs.edit().putString("sorted_choice", "Schedule").apply()
+                getPreferences(Context.MODE_PRIVATE).edit().putString("sorted_choice", "Schedule").apply()
                 true
             }
             else -> {
