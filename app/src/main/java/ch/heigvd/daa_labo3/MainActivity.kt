@@ -9,7 +9,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 
 class MainActivity : AppCompatActivity() {
-    private val prefs : SharedPreferences = getPreferences(Context.MODE_PRIVATE)
+    private lateinit var prefs : SharedPreferences
     private val viewModel:NoteViewModel by viewModels {
         NoteViewModel.NoteViewModelFactory((application as NoteApp).repository)
     }
@@ -17,6 +17,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Retrieve the sort list set by the user during his last activity or set creation date by default
+        prefs = getPreferences(Context.MODE_PRIVATE)
         val sortedValue : String? = prefs.getString("sorted_choice", "CreationDate")
         viewModel.sorting.postValue(NoteViewModel.Sorting.valueOf(sortedValue!!))
     }
@@ -39,12 +42,12 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.creation_date -> {
                 viewModel.sorting.postValue(NoteViewModel.Sorting.CreationDate)
-                prefs.edit().putString("sorted_choice", NoteViewModel.Sorting.CreationDate.toString()).apply()
+                prefs.edit().putString("sorted_choice", "CreationDate").apply()
                 true
             }
             R.id.eta -> {
                 viewModel.sorting.postValue(NoteViewModel.Sorting.Schedule)
-                prefs.edit().putString("sorted_choice", NoteViewModel.Sorting.Schedule.toString()).apply()
+                prefs.edit().putString("sorted_choice", "Schedule").apply()
                 true
             }
             else -> {
