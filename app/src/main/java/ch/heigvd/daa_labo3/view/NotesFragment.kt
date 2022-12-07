@@ -1,4 +1,4 @@
-package ch.heigvd.daa_labo3
+package ch.heigvd.daa_labo3.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ch.heigvd.daa_labo3.NoteApp
+import ch.heigvd.daa_labo3.NoteViewModel
+import ch.heigvd.daa_labo3.R
 import java.util.*
 
 /**

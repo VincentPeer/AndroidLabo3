@@ -1,7 +1,7 @@
-package ch.heigvd.daa_labo3
+package ch.heigvd.daa_labo3.model
 
-import ch.heigvd.daa_labo3.models.Note
-import ch.heigvd.daa_labo3.models.NoteAndSchedule
+import ch.heigvd.daa_labo3.model.entities.Note
+import ch.heigvd.daa_labo3.model.entities.NoteAndSchedule
 import kotlin.concurrent.thread
 
 class Repository(private val notesDAO: NotesDAO) {
@@ -25,7 +25,9 @@ class Repository(private val notesDAO: NotesDAO) {
 
     fun deleteAll() {
         thread {
-            notesDAO.deleteAll()
+            notesDAO.deleteAllNotes()
+            notesDAO.deleteAllSchedules()
+
         }
     }
 }

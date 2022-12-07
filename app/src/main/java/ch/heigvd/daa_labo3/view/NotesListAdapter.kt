@@ -1,4 +1,4 @@
-package ch.heigvd.daa_labo3
+package ch.heigvd.daa_labo3.view
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import ch.heigvd.daa_labo3.models.NoteAndSchedule
-import ch.heigvd.daa_labo3.models.State
-import ch.heigvd.daa_labo3.models.Type
+import ch.heigvd.daa_labo3.R
+import ch.heigvd.daa_labo3.model.entities.NoteAndSchedule
+import ch.heigvd.daa_labo3.model.entities.State
+import ch.heigvd.daa_labo3.model.entities.Type
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -20,8 +22,9 @@ class NotesListAdapter(_items: List<NoteAndSchedule> = listOf()) :
     var items = listOf<NoteAndSchedule>()
         @SuppressLint("NotifyDataSetChanged")
         set(value) {
+            val noteDiffCallback = NoteDiffCallback(items, value)
             field = value
-            notifyDataSetChanged()
+            DiffUtil.calculateDiff(noteDiffCallback).dispatchUpdatesTo(this)
         }
 
     init {

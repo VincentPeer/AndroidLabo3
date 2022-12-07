@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/control_fragment"
-        android:name="ch.heigvd.daa_labo3.NotesFragment"
+        android:name="ch.heigvd.daa_labo3.view.NotesFragment"
         app:layout_constraintVertical_weight="3"
         >
     </androidx.fragment.app.FragmentContainerView>
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notes_container"
-        android:name="ch.heigvd.daa_labo3.ControlsFragment"
+        android:name="ch.heigvd.daa_labo3.view.ControlsFragment"
         app:layout_constraintVertical_weight="1"
         >
     </androidx.fragment.app.FragmentContainerView>

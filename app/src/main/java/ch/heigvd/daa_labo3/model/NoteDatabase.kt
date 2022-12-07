@@ -1,4 +1,4 @@
-package ch.heigvd.daa_labo3
+package ch.heigvd.daa_labo3.model
 
 import android.content.Context
 import androidx.room.Database
@@ -6,8 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import ch.heigvd.daa_labo3.models.Note
-import ch.heigvd.daa_labo3.models.Schedule
+import ch.heigvd.daa_labo3.model.entities.Note
+import ch.heigvd.daa_labo3.model.entities.Schedule
 import kotlin.concurrent.thread
 
 @Database(
@@ -15,7 +15,7 @@ import kotlin.concurrent.thread
     version = 1,
     exportSchema = true
 )
-@TypeConverters(Note.CalendarConverter::class)
+@TypeConverters(CalendarConverter::class)
 abstract class NoteDatabase : RoomDatabase() {
 
     abstract fun noteDAO(): NotesDAO

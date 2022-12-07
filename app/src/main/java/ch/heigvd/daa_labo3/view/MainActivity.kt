@@ -1,4 +1,4 @@
-package ch.heigvd.daa_labo3
+package ch.heigvd.daa_labo3.view
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -8,9 +8,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import ch.heigvd.daa_labo3.NoteApp
+import ch.heigvd.daa_labo3.NoteViewModel
+import ch.heigvd.daa_labo3.R
 
 class MainActivity : AppCompatActivity() {
-    private val viewModel:NoteViewModel by viewModels {
+    private val viewModel: NoteViewModel by viewModels {
         NoteViewModel.NoteViewModelFactory((application as NoteApp).repository)
     }
 
