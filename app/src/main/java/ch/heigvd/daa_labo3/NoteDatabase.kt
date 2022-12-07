@@ -29,7 +29,6 @@ abstract class NoteDatabase : RoomDatabase() {
                     NoteDatabase::class.java, "notes.db"
                 )
                     .fallbackToDestructiveMigration()
-                    // not called thus useless. Don't know wy...
                     .addCallback(CreationCallBack())
                     .build()
                 INSTANCE!!
@@ -37,24 +36,23 @@ abstract class NoteDatabase : RoomDatabase() {
         }
     }
 
-    // Not called, don't know wy...
     private class CreationCallBack : RoomDatabase.Callback() {
 
         override fun onCreate(db: SupportSQLiteDatabase) {
+            // onCreate is called only the first time the app is run on the device
+            // or if we clear its storage
+
             super.onCreate(db)
             INSTANCE?.let { database ->
-                val isEmpty = database.noteDAO().getCount().value == 0L
-                if (isEmpty) {
-                    thread {
-                        // when the database is created for the 1st time, we can, for example, populate it
-                        // should be done asynchronously
-                        val dao = database.noteDAO()
-                        for (i in 0..10) {
-                            val id = dao.insertNote(Note.generateRandomNote())
-                            Note.generateRandomSchedule()?.let {
-                                it.ownerId = id
-                                dao.insertSchedule(it)
-                            }
+                thread {
+                    // when the database is created for the 1st time, we populate it
+                    // should be done asynchronously
+                    val dao = database.noteDAO()
+                    for (i in 0..10) {
+                        val id = dao.insertNote(Note.generateRandomNote())
+                        Note.generateRandomSchedule()?.let {
+                            it.ownerId = id
+                            dao.insertSchedule(it)
                         }
                     }
                 }
