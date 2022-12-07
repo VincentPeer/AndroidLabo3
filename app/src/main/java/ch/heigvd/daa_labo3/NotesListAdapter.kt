@@ -87,9 +87,15 @@ class NotesListAdapter(_items: List<NoteAndSchedule> = listOf()) :
             noteDescr.text = note.note.text
             noteTypePictogram.setImageResource(getDrawableId(note.note.type))
 
-            if (note.note.state == State.DONE) {
-                noteTypePictogram.setColorFilter(ContextCompat.getColor(context, R.color.green))
-            }
+            noteTypePictogram.setColorFilter(
+                ContextCompat.getColor(
+                    context,
+                    when (note.note.state) {
+                        State.DONE -> R.color.green
+                        State.IN_PROGRESS -> R.color.black
+                    }
+                )
+            )
 
             if (viewType == SCHEDULE && note.schedule?.date != null) {
 
