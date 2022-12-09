@@ -1,4 +1,4 @@
-package ch.heigvd.daa_labo3.models
+package ch.heigvd.daa_labo3.model.entities
 
 import androidx.room.Embedded
 import androidx.room.Relation

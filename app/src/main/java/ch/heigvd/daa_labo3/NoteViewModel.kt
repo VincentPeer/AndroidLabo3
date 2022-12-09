@@ -1,6 +1,7 @@
 package ch.heigvd.daa_labo3
 
 import androidx.lifecycle.*
+import ch.heigvd.daa_labo3.model.Repository
 
 class NoteViewModel(private val repository: Repository) : ViewModel() {
 

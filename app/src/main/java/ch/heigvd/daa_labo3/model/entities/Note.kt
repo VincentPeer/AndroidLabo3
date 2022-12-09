@@ -1,8 +1,7 @@
-package ch.heigvd.daa_labo3.models
+package ch.heigvd.daa_labo3.model.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
 import java.util.*
 
 
@@ -54,13 +53,5 @@ data class Note(
         }
     }
 
-    class CalendarConverter {
-        @TypeConverter
-        fun toCalendar(dateLong: Long) = Calendar.getInstance().apply {
-            time = Date(dateLong)
-        }
 
-        @TypeConverter
-        fun fromCalendar(date: Calendar) = date.time.time // Long
-    }
 }
